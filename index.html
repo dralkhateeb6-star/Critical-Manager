@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Critical: Hidden King</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e4d4b0;--pa:#f7edd3;--pb:#ead9ae;--ink:#2b1d14;--gold:#8f600e;--red:#7a1420;--line:#8b6a3a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150f14;--pa:#2e2221;--pb:#241a1c;--ink:#f0e2c4;--gold:#d9a94a;--red:#e0584a;--line:#6b5130}}
+:root[data-theme="dark"]{--bg:#150f14;--pa:#2e2221;--pb:#241a1c;--ink:#f0e2c4;--gold:#d9a94a;--red:#e0584a;--line:#6b5130}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:500 20px/1.5 'Cormorant Garamond',Georgia,serif;background:radial-gradient(ellipse at 50% 0,rgba(217,169,74,.2),transparent 65%),repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 2px,transparent 2px 7px),var(--bg);min-height:100vh}
+body::before{content:'👑';position:fixed;left:-4vw;bottom:-2vh;font-size:30vh;opacity:.08;pointer-events:none;transform:rotate(-10deg)}
+body::after{content:'🃏';position:fixed;right:-4vw;top:2vh;font-size:30vh;opacity:.08;pointer-events:none;transform:rotate(12deg)}
+.wm{position:fixed;inset:0;margin:auto;width:min(120vw,720px);height:min(120vw,720px);opacity:.07;pointer-events:none}
+#app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:12px 16px 24px}
+h1,h2,h3,.lb,.btn,.go,.dock small,.pc small{font-family:'Cinzel',Georgia,serif}
+h1{font:700 44px/1.1 'Cinzel Decorative',Georgia,serif;text-align:center;margin:6px 0 0;color:var(--gold);letter-spacing:3px}
+h2{text-align:center;color:var(--red);font-size:24px;letter-spacing:4px;text-transform:uppercase;margin:4px 0 12px}
+h2::before{content:'❦ '}h2::after{content:' ❦'}
+h3{color:var(--gold);font-size:17px;margin:14px 0 4px;letter-spacing:1px;border-bottom:1px solid var(--line)}
+.logo{display:block;width:150px;height:150px;margin:8px auto}
+.tag{text-align:center;font-style:italic;margin:0 0 12px}
+.scr{background:linear-gradient(var(--pa),var(--pb));border:2px solid var(--gold);outline:1px solid var(--line);outline-offset:-7px;border-radius:4px;padding:18px;margin:10px 0;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.lb{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+button{font:700 15px 'Cinzel',serif;letter-spacing:1px;color:var(--ink);background:var(--pa);border:2px solid var(--gold);border-radius:4px;padding:9px 14px;margin:4px 0;cursor:pointer}
+.go{width:100%;color:#1a100a;background:linear-gradient(#e8c06a,#b98a2c);text-transform:uppercase;padding:13px}
+.btn{width:100%}.bk{padding:6px 12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.pb{font-size:30px;padding:16px 0;border-radius:50%;aspect-ratio:1;line-height:1;background:radial-gradient(circle at 35% 30%,#a8222f,var(--red));color:#f7e7c3;border-color:var(--gold)}
+.pb small{display:block;font-size:11px}.dn{filter:grayscale(.7);opacity:.7}
+.emb{font-size:54px;text-align:center}.big{font:700 34px 'Cinzel Decorative',serif;color:var(--red);text-align:center}
+.ctr{text-align:center}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.pc{border:2px solid var(--gold);border-radius:6px;background:var(--pa);text-align:center;padding:8px 2px}
+.pc small{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase}.pc b{font-size:34px}.pc i{font-style:normal;font-size:24px}
+.sum{background:var(--red);color:#f7e7c3}
+.row{padding:6px 0;border-bottom:1px dotted var(--line)}
+.me{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+select,input[type=text],textarea{font:inherit;color:var(--ink);background:var(--pa);border:1px solid var(--line);padding:4px 6px;max-width:100%}
+input[type=text],textarea{width:100%}
+.jr{padding:8px 0;border-bottom:1px dotted var(--line)}.jr select{margin-inline-start:8px}
+.chips{display:flex;gap:6px}.chip{flex:1}.on{background:var(--gold);color:#1a100a}
+.dock{position:sticky;bottom:0;display:flex;gap:6px;background:var(--bg);border-top:2px solid var(--gold);padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));margin-top:14px}
+.dock button{flex:1;margin:0;padding:6px 2px}.dock b{display:block;font-size:22px;line-height:1.1}.dock small{font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:17px}td,th{border-bottom:1px solid var(--line);padding:3px;text-align:center}
+.sm{font-size:16px;opacity:.85}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><symbol id="lg" viewBox="0 0 100 100"><defs><clipPath id="cl"><rect width="50" height="100"/></clipPath><clipPath id="cr"><rect x="50" width="50" height="100"/></clipPath></defs><circle cx="50" cy="50" r="46" fill="none" stroke="var(--gold)" stroke-width="3"/><g clip-path="url(#cl)"><path d="M16 70L19 34L33 50L50 26V74H16Z" fill="var(--gold)"/><circle cx="19" cy="31" r="3.5" fill="var(--gold)"/><circle cx="50" cy="23" r="3.5" fill="var(--gold)"/></g><g clip-path="url(#cr)"><path d="M50 74V38L60 46L72 26L86 48L82 74Z" fill="var(--red)" stroke="var(--gold)" stroke-width="2"/><circle cx="72" cy="22" r="4" fill="var(--gold)"/><circle cx="88" cy="46" r="3.5" fill="var(--gold)"/><circle cx="64" cy="58" r="2.4" fill="var(--gold)"/><path d="M56 66Q69 76 80 64" stroke="var(--gold)" fill="none" stroke-width="2.4"/></g><path d="M50 22V78" stroke="var(--gold)" stroke-width="1.5"/></symbol></svg>
+<svg class="wm"><use href="#lg"/></svg>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const R={K:['King','k','👑'],Q:['Queen','k','⚜'],G:['Guard','k','☪'],SK:['Kingdom Spy','k','🗝'],J:['Joker','j','🃏'],SJ:['Joker Spy','j','🎭'],C:['Citizen','k','⚒']};
+const KV=[13,10,7,4,1],JV=[1,4,7,10,13],SJV=[11,0,11,0,11],SKV=[0,11,0,11,0],SU=['♠','♥','♦','♣'];
+const QS=['Is the sum of your cards greater than or smaller than X?','Is the sum equal to X? Or does your play card equal X, or fall between X and Y?','Is your basic card even or odd? Or prime or composite?','Is your basic card red or black? Or which suit?','Is your basic card from the royal category (King / Queen)?'];
+// [id, label, roles, max uses by role, min round index, target type]
+const AB=[['atk','Attack a player',['K','J','Q'],{K:2,J:2,Q:1},1,'t'],
+['dis','Disable a player',['K','J'],{K:1,J:3},0,'t'],
+['jpar','Parry an attack',['J'],{J:1},0,''],
+['qs','Parry a disable on myself',['Q'],{Q:1},0,''],
+['qk','Parry a disable on a player (the King)',['Q'],{Q:1},0,'t'],
+['gs','Protect myself from disabling',['G'],{G:1},0,''],
+['gk','Protect the King from attack',['G'],{G:99},0,''],
+['rev','Reveal all play cards',['SK','SJ'],{SK:1,SJ:1},1,''],
+['leak','Leak information to my leader',['SK','SJ'],{SK:1,SJ:1},0,'tr'],
+['cd','Defect to the Joker team',['C'],{C:1},0,''],
+['ca','Citizen attack',['C'],{C:1},1,'t']];
+const RULES=['A valid Disable cancels a valid Attack.','A valid Disable cancels a valid Disable.','A valid Parry cancels a valid Disable.','Protection cancels Attack.','Attack cancels Attack.','A successful attack on the enemy leader wins the game for its team.'];
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=t=>String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+let g=null,sel=null,tab='card',rd=0,home=1;
+const base=(p,r)=>{const x=g.role[p];return x=='K'?KV[r]:x=='J'?JV[r]:x=='SJ'?SJV[r]:x=='SK'?SKV[r]:x=='Q'?12:x=='G'?1:g.cit.v};
+const suit=p=>({K:'♠',Q:'♥',SK:'♣',SJ:'♦',G:'♠',J:'🃏',C:g.cit.s}[g.role[p]]);
+const team=p=>{const x=g.role[p];return x=='J'||x=='SJ'||(x=='C'&&g.def)?'j':'k'};
+const cd=c=>c.v+c.s;
+const gu=(S,r,i)=>{for(let k=r;k>=0;k--)if(S.g[k+'_'+i])return S.g[k+'_'+i];return ''};
+
+function start(){
+ const role=sh(['K','Q','G','SK','J','SJ','C']);
+ let deck=[];for(let v=1;v<=10;v++)for(const s of SU)deck.push({v,s});
+ deck=deck.filter(c=>!(c.v==1&&c.s=='♠'));
+ const cit=sh(deck.filter(c=>c.v>1))[0];
+ deck=deck.filter(c=>c!==cit);
+ const rk=sh([...new Set(deck.map(c=>c.v))].filter(v=>deck.filter(c=>c.v==v).length>=3))[0];
+ const secret=deck.filter(c=>c.v==rk).slice(0,3);
+ deck=sh(deck.filter(c=>!secret.includes(c)));
+ g={r:0,role,cit,secret,play:[0,1,2,3,4].map(()=>deck.splice(0,7)),u:role.map(()=>({})),pend:role.map(()=>[]),act:[],done:[],ph:'deal',def:false,win:null,
+  pt:role.map(()=>({g:0,w:0,d:0})),sheet:role.map(()=>({g:{},n:{},t:{}})),order:sh([0,1,2,3,4,5,6])};
+ sel=null;home=0;render();
+}
+function back(){
+ if(sel!=null)sel=null;
+ else if(g.ph=='deal')home=1;
+ else if(g.ph=='q')g.ph='deal';
+ else if(g.ph=='act')g.ph='q';
+ render();
+}
+function next(ph){g.ph=ph;sel=null;render()}
+function nextRound(){
+ g.r++;g.act=[];g.done=[];g.pend=g.role.map(()=>[]);g.order=sh([0,1,2,3,4,5,6]);
+ next(g.r>4?'final':'deal');
+}
+function redo(p){g.act=g.act.filter(a=>{if(a.p==p){g.u[p][a.id]--;return false}return true});g.done=g.done.filter(x=>x!=p)}
+function opn(i){if(g.ph=='act'&&g.done.includes(i))redo(i);sel=i;tab={deal:'card',act:'act',inbox:'mail'}[g.ph];rd=Math.min(g.r,4);render()}
+function G(f){return `<div class="grid">${[0,1,2,3,4,5,6].map(i=>`<button class="pb${f&&f(i)?' dn':''}" onclick="opn(${i})">${i+1}${f&&f(i)?'<small>✓ sealed</small>':''}</button>`).join('')}</div>`}
+const tp=(l,b=1)=>`<div class="top">${b?'<button class="bk" onclick="back()">‹ Back</button>':'<span></span>'}<span class="lb">${l}</span></div>`;
+
+function cardV(p){
+ const r=g.r,x=g.role[p],b=base(p,r),c=g.play[r][p];
+ return `<div class="emb">${R[x][2]}</div><div class="big">${R[x][0]}</div><p class="ctr">${R[x][1]=='j'?'Joker Team: expose the King and topple him.':'Kingdom Team: protect the King from exposure.'}</p>
+ <div class="cards"><div class="pc"><small>Basic · R${r+1}</small><b>${b}</b><i>${suit(p)}</i></div><div class="pc"><small>Play card</small><b>${c.v}</b><i>${c.s}</i></div><div class="pc sum"><small>Sum</small><b>${b+c.v}</b></div></div>`+
+ (x=='SK'||x=='SJ'?`<p class="ctr">Secret cards: <b>${g.secret.map(cd).join('  ')}</b></p>`:'');
+}
+function abilV(p){
+ const mine=g.role[p];
+ let h='<h2>Abilities</h2>';
+ Object.keys(R).forEach(x=>{
+  h+=`<div class="scr${x==mine?' me':''}" style="padding:10px;margin:8px 0"><b>${R[x][2]} ${R[x][0]}</b> <span class="sm">${R[x][1]=='j'?'(Joker side)':'(Kingdom side)'}${x==mine?' · YOU':''}</span>`+
+  AB.filter(a=>a[2].includes(x)).map(a=>`<div class="row">${a[1]} <b>×${a[3][x]>9?'∞':a[3][x]}</b>${a[4]?' <span class="sm">· from round 2</span>':''}</div>`).join('')+'</div>';
+ });
+ h+=`<h3>Clash rules</h3>${RULES.map(t=>`<div class="row sm">${t}</div>`).join('')}`;
+ h+=`<h3>Basic card by round</h3><div class="wrap"><table><tr><th></th>${[1,2,3,4,5].map(n=>`<th>${n}</th>`).join('')}</tr>${Object.keys(R).map(x=>`<tr><td>${R[x][0]}</td>${[0,1,2,3,4].map(r=>`<td>${{K:KV[r],Q:12,G:1,J:JV[r],SJ:SJV[r],SK:SKV[r],C:'2–10'}[x]}</td>`).join('')}</tr>`).join('')}</table></div><p class="sm">Sum = basic card + play card (1 to 10).</p>`;
+ return h;
+}
+function jourV(p){
+ const S=g.sheet[p];
+ let h=`<h2>Journal</h2><div class="chips">${[0,1,2,3,4].map(n=>`<button class="chip${n==rd?' on':''}" onclick="rd=${n};render()">R${n+1}</button>`).join('')}</div>
+ <h3>Round ${rd+1} reasoning</h3><textarea rows="4" placeholder="What did the answers reveal? Who seems suspicious, and why?" onchange="g.sheet[${p}].t[${rd}]=this.value">${esc(S.t[rd])}</textarea><h3>Who is who? (round ${rd+1})</h3>`;
+ [0,1,2,3,4,5,6].forEach(i=>{if(i==p)return;const cur=gu(S,rd,i);
+  h+=`<div class="jr"><b>Player ${i+1}</b><select onchange="g.sheet[${p}].g['${rd}_${i}']=this.value"><option value="">?</option>${Object.keys(R).map(x=>`<option value="${x}"${cur==x?' selected':''}>${R[x][0]}</option>`).join('')}</select><input type="text" placeholder="Answer / clue this round" value="${esc(S.n[rd+'_'+i])}" onchange="g.sheet[${p}].n['${rd}_${i}']=this.value"></div>`});
+ return h+'<p class="sm">Your guesses carry forward each round. The latest ones are scored at the end.</p>';
+}
+function mailV(p){return `<h2>Mail</h2>${g.pend[p].length?g.pend[p].map(m=>`<div class="row">${m}</div>`).join(''):'<p class="ctr">Nothing for you this round.</p>'}`}
+function form(p){
+ const ro=g.role[p];let h='<h2>Your move</h2><p class="sm">Tick what you want to use this round, or leave all empty.</p>';
+ const opts=ty=>[0,1,2,3,4,5,6].filter(i=>ty=='tr'||i!=p).map(i=>`<option value="${i}">Player ${i+1}</option>`).join('');
+ AB.forEach(([id,l,rs,mx,mr,ty])=>{
+  if(!rs.includes(ro))return;
+  const rem=mx[ro]-(g.u[p][id]||0),n=Math.min(rem,id=='atk'?2:1);
+  for(let k=0;k<n;k++){
+   h+=`<div class="row"><label><input type="checkbox" id="c_${id}${k}" ${g.r<mr?'disabled':''}> ${l}${id=='gk'?'':` (${rem} left)`}${g.r<mr?' · from round 2':''}</label>`;
+   if(ty)h+=`<br><select id="t_${id}${k}">${opts(ty)}</select>`;
+   if(ty=='tr')h+=`<select id="r_${id}${k}">${Object.keys(R).map(x=>`<option value="${x}">${R[x][0]}</option>`).join('')}</select>`;
+   h+='</div>';
+  }
+ });
+ return h+`<button class="go" onclick="sub(${p})">Seal move</button>`;
+}
+function sub(p){
+ AB.forEach(([id,l,rs,mx,mr,ty])=>{for(let k=0;k<2;k++){
+  const c=$(`#c_${id}${k}`);
+  if(c&&c.checked&&!c.disabled){const a={p,id,t:ty?+$(`#t_${id}${k}`).value:null};if(ty=='tr')a.r=$(`#r_${id}${k}`).value;g.act.push(a);g.u[p][id]=(g.u[p][id]||0)+1}
+ }});
+ g.done.push(p);sel=null;render();
+}
+function resolve(){
+ const A=g.act,role=g.role,r=g.r,M=(p,m)=>g.pend[p].push(m);
+ const kp=role.indexOf('K'),jp=role.indexOf('J'),qp=role.indexOf('Q');
+ const by=id=>A.filter(a=>a.id==id),has=(id,p,f)=>A.some(x=>x.id==id&&x.p==p&&(!f||f(x)));
+ const dis=by('dis').filter(a=>{
+  if(has('gs',a.t)&&role[a.t]=='G')return false;
+  if(a.t==qp&&has('qs',qp))return false;
+  if(a.t==kp&&has('qk',qp,x=>x.t==kp))return false;
+  return true});
+ dis.forEach(a=>g.pt[a.p][team(a.t)!=team(a.p)?'g':'w']++);
+ const tg=new Set(dis.map(a=>a.t)),eff=dis.filter(a=>!tg.has(a.p)),off=new Set(eff.map(a=>a.t));
+ off.forEach(p=>M(p,'You were disabled this round: your abilities did not take effect.'));
+ const ok=a=>!off.has(a.p);
+ by('cd').filter(ok).forEach(a=>{g.def=true;M(a.p,'You defected to the Joker team.')});
+ const atk=A.filter(a=>(a.id=='atk'||a.id=='ca')&&ok(a)).map(a=>{const s=team(a.p);return {...a,s,v:a.t==(s=='j'?kp:jp)}});
+ atk.forEach(a=>g.pt[a.p][a.v?'g':'w']++);
+ const gp=by('gk').some(a=>ok(a)&&role[a.p]=='G'),jpr=by('jpar').some(ok);
+ let live=atk.filter(a=>a.v&&!(a.s=='j'&&gp)&&!(a.s=='k'&&jpr));
+ if(live.some(a=>a.s=='j')&&live.some(a=>a.s=='k'))live=[];
+ if(live.length){g.win=live[0].s;g.pt[live[0].p].d=1}
+ by('rev').filter(ok).forEach(a=>M(a.p,'Play cards: '+g.play[r].map((c,i)=>`P${i+1} ${cd(c)}`).join(' | ')));
+ by('leak').filter(ok).forEach(a=>M(team(a.p)=='j'?jp:kp,`Your Spy (Player ${a.p+1}) reports: Player ${a.t+1} is the ${R[a.r][0]}.`));
+ g.ph=g.win?'final':'inbox';sel=null;render();
+}
+function render(){
+ const A=$('#app');
+ if(home||!g){A.innerHTML=`<svg class="logo"><use href="#lg"/></svg><h1>CRITICAL</h1><h2>Hidden King</h2><p class="tag">Cards do not lie.</p><div class="scr"><p style="margin:0">A digital game master for the 7-player Easy Mode. It deals roles in secret, collects hidden moves, resolves clashes and keeps score. Pass one device around the table.</p></div>${g?'<button class="go" onclick="home=0;render()">Resume game</button>':''}<button class="${g?'btn':'go'}" onclick="start()">New game</button>`;return}
+ if(sel!=null){
+  const T=[['card','👤','Card'],['abil','⚔','Abilities'],['jour','📜','Journal']];
+  if(g.ph=='act')T.unshift(['act','✦','Move']);
+  if(g.ph=='inbox')T.unshift(['mail','✉','Mail']);
+  A.innerHTML=tp('Player '+(sel+1))+`<div class="scr">${{card:cardV,abil:abilV,jour:jourV,act:form,mail:mailV}[tab](sel)}</div><nav class="dock">${T.map(([k,i,l])=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';render()"><b>${i}</b><small>${l}</small></button>`).join('')}</nav>`;return;
+ }
+ const lb=`Round ${Math.min(g.r+1,5)} of 5`;let h;
+ if(g.ph=='deal')h=tp(lb)+`<h2>The Deal</h2><p class="sm">Each player taps their number to see their role and cards, then taps Back to hide them.</p>${G()}<button class="go" onclick="next('q')">Begin questions</button>`;
+ else if(g.ph=='q')h=tp(lb)+`<h2>Questions</h2><div class="scr"><b>This round's question</b><br>${QS[g.r]}</div><div class="scr"><b>Asking order (draw)</b><br>${g.order.map(i=>'P'+(i+1)).join(' → ')}</div><p class="sm">Everyone asks one question and answers one. Honesty is the rule.</p><button class="go" onclick="next('act')">To the secret moves</button>`;
+ else if(g.ph=='act')h=tp(lb)+`<h2>Secret Moves</h2><p class="sm">Each player taps their seal and records a move. Tap a sealed number to change it.</p>${G(i=>g.done.includes(i))}${g.done.length==7?'<button class="go" onclick="resolve()">Resolve the round</button>':''}`;
+ else if(g.ph=='inbox')h=tp(lb,0)+`<h2>Round Result</h2><p class="sm">The kingdom still stands. Each player opens their private mail and journal.</p>${G()}<button class="go" onclick="nextRound()">${g.r<4?'Next round':'To the finale'}</button>`;
+ else{
+  const w=g.win||'k';
+  const rows=g.role.map((x,p)=>{const d=g.role.filter((y,i)=>i!=p&&gu(g.sheet[p],4,i)==y).length,t=g.pt[p];return {p,x,d,t,s:d+t.g+t.d}}).sort((a,b)=>b.s-a.s||a.t.w-b.t.w);
+  h=`<svg class="logo"><use href="#lg"/></svg><h1>The End</h1><div class="scr big">${w=='j'?'The Joker Team triumphs 🃏':'The Kingdom endures 👑'}</div>${g.win?'':'<p class="ctr sm">The King survived all five rounds.</p>'}
+  <h2>Scoreboard</h2><div class="wrap"><table><tr><th>P</th><th>Role</th><th>Deduct.</th><th>Skill</th><th>Decide</th><th>Err.</th><th>Total</th></tr>${rows.map(o=>`<tr><td>${o.p+1}</td><td>${R[o.x][0]}${o.x=='C'&&g.def?' (defected)':''}</td><td>${o.d}</td><td>${o.t.g}</td><td>${o.t.d}</td><td>${o.t.w}</td><td><b>${o.s}</b></td></tr>`).join('')}</table></div>
+  <p class="big">Champion: Player ${rows[0].p+1}</p><p class="sm ctr">Deductions are scored from each player's final journal guesses.</p><button class="go" onclick="g=null;home=1;render()">New game</button>`;
+ }
+ A.innerHTML=h;
+}
+render();
+</script></body></html>
